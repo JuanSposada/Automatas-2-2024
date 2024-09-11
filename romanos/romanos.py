@@ -8,7 +8,6 @@ dict_romanos = {
     'M' : 1000
 }
 
-
 def is_roman(input):
     for letra in input:
         if letra in dict_romanos:
@@ -17,9 +16,13 @@ def is_roman(input):
 
 def separate_roman(input):
     array = []
+    bandera = False
     for letra in input:
         if letra in dict_romanos:
+            bandera = True
             array.append(letra)
+        elif bandera:
+            break
     return array
 
 def numerar_romanos(input):
@@ -56,7 +59,7 @@ def sintax_checker(input):
     for i in range(len(input)-1):
         if input[i] == 'I' or input[i] == 'L' :
             if input[i+1] != 'I' and input[i+1] != 'V' and input[i+1] != 'X':
-                print(f'error de sintaxis despues de {input[i]} solo puede ir V o X ') 
+                print(f'error de sintaxis despues de {input[i]} solo puede ir I, V o X ') 
         if input[i] == 'V':
             if input[i+1] != 'I':
                 print(f'error de sintaxis despues de {input[i]} solo puede ir I')
@@ -65,16 +68,19 @@ def sintax_checker(input):
                 print(f'error de sintaxis despues de {input[i]} solo puede ir I,V,X,L o C ')  
             
 ##m main
-input = 'vLCn'
+input = 'Xiilena'
 input = input.upper()
 
 
 is_roman(input)
 is_valid(input)
-sintax_checker(input)
 
-array_romanos = separate_roman(input)
-print(array_romanos)
-valores = numerar_romanos(array_romanos)
-print(valores)
-evaluar_valores(valores)
+
+romanos = separate_roman(input)
+
+print(romanos)
+sintax_checker(romanos)
+roman_value = numerar_romanos(romanos)
+print(roman_value)
+evaluar_valores(roman_value)
+
