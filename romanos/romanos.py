@@ -1,3 +1,8 @@
+### Idetificador de numero romanos en una cadena de Texto ###
+### por Juan S Moreno Posada
+
+
+# Diccionario de valores romanos
 dict_romanos = {
     'I' : 1,
     'V' : 5,
@@ -8,6 +13,8 @@ dict_romanos = {
     'M' : 1000
 }
 
+
+# Esta funcion valida si hay numeros romanosc
 def is_roman(input):
     for letra in input:
         if letra in dict_romanos:
