@@ -17,6 +17,8 @@ dict_romanos = {
     'M' : 1000
 }
 
+array_palabras = ['pixel', 'civil', 'paco', 'hijo', 'toxico','camion', 'clave', 'ximena', 'damian',
+                  'lili', 'claudia', 'medallon', 'clima']
 
 # Esta funcion valida si hay numeros romanos
 def is_roman(entrada):
@@ -125,20 +127,25 @@ def sintax_checker(entrada):
 ##m main
 
 def main():
-    print("\n### Detector de numeros romanos en cadena de texto ####\n")    
-    entrada = input("Inserta palabra que quieres verificar: ")
-    entrada = entrada.upper()
+    dict_palabras = {}
+    for entrada in array_palabras:
 
-    if is_roman(entrada):
+        entrada = entrada.upper()
 
-        romanos = separate_roman(entrada)
-        print(romanos)
-        checked_romanos= sintax_checker(romanos)
-        print(checked_romanos)
-        checked_duplicates = is_duplicate(checked_romanos)
-        roman_value = numerar_romanos(checked_duplicates)
-        print(roman_value)
-        resultado = evaluar_valores(roman_value)
-        print(entrada + '=' + str(resultado))
+        if is_roman(entrada):
+
+            romanos = separate_roman(entrada)
+            print(romanos)
+            checked_romanos= sintax_checker(romanos)
+            print(checked_romanos)
+            checked_duplicates = is_duplicate(checked_romanos)
+            roman_value = numerar_romanos(checked_duplicates)
+            print(roman_value)
+            resultado = evaluar_valores(roman_value)
+            dict_palabras[entrada] = resultado
+            print(dict_palabras)
+    ordered_palabras = {k: v for k, v in sorted(dict_palabras.items(), key=lambda item: item[1])}
+    print("\nPalabras ordenadas: \n")
+    print(ordered_palabras)
 
 main()
