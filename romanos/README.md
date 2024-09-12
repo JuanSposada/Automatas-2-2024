@@ -16,6 +16,11 @@
 * El programa fue desarrollado con Python Version 3.10
 * No fue necesario importar ninguna libreria.
 
+### Status
+* El programa por el momento se encuentra terminado
+* Sin embargo este programa puede ser aprovechado para incluirle mas caracteristicas
+* La funcion de sintax_checker puede utiliarse para validar numeros romanos en cualquier otro programa
+
 
 
 
