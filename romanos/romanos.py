@@ -1,6 +1,10 @@
 ### Idetificador de numero romanos en una cadena de Texto ###
 ### por Juan S Moreno Posada
 
+## Este programa extrae los numeros romanos de una cadena de texto
+## lo tiene, verifica que su sintaxis para que sea valida de acuerdo
+##c con las reglas de los numeros romanos
+## Despues nos devuelve el valor del numero romano valido
 
 # Diccionario de valores romanos
 dict_romanos = {
@@ -14,31 +18,38 @@ dict_romanos = {
 }
 
 
-# Esta funcion valida si hay numeros romanosc
-def is_roman(input):
-    for letra in input:
+# Esta funcion valida si hay numeros romanos
+def is_roman(entrada):
+    for letra in entrada:
         if letra in dict_romanos:
             print('si hay romanos')
             return True
 
-def separate_roman(input):
+
+"""Esta funcion separa los numeros romanos de la cadena de texto
+    y los coloca en un arreglo"""
+def separate_roman(entrada):
     array = []
-    bandera = False
-    for letra in input:
+    #bandera = False
+    for letra in entrada:
         if letra in dict_romanos:
             bandera = True
             array.append(letra)
-        elif bandera:
-            break
+     #   elif bandera:
+     #       break
     return array
 
-def numerar_romanos(input):
+"""Esta funcion saca los valores de los numeros romanos de acuerdo al diccionario"""
+def numerar_romanos(entrada):
     valores = []
-    for letra in input:
+    for letra in entrada:
         if letra in dict_romanos:
             valores.append(dict_romanos[letra])
     return valores
 
+""" Esta funcion hace la suma de los numeros romanos 
+    si el valor esta  la izquierda de uno mayor, se multiplica por -1
+    para que al final se sume y este automaticamente se reste del resultado"""
 def evaluar_valores(array):
     array.append(0)
     result = []
@@ -47,47 +58,87 @@ def evaluar_valores(array):
             result.append(array[i] *(-1))
         else:
             result.append(array[i])
-    print(sum(result))
+    return(sum(result))
 
-def is_valid(array):
+""" Verifica si hay caracteres dupliccados mas de 3 veces"""
+def is_duplicate(entrada):
+    entrada.append(0)
     result = []
     bandera = 0
-    for i in range(len(array)-1):
-        if input[i] == 'V' or input[i] == 'L' or input[i] == 'D':
-            if input[i] == input[i+1]:
-                print(f'No pueden ir dos {input[i]} seguidas')
-        if input[i] == 'I' or input[i] == 'X' or input[i] == 'C' or input[i] == 'M':
-            if input[i] == input[i+1]:
-                bandera +=1
-    if bandera > 2:
-            print("no puede haber mas de 3 letras iguales")    
+    for i in range(len(entrada)-1):
+        result.append(entrada[i])
+        if entrada[i] == entrada[i+1]:
+            bandera +=1
+        if bandera > 2:
+            print("no puede haber mas de 3 letras iguales")
+            break
+    return result
 
-def sintax_checker(input):
-    for i in range(len(input)-1):
-        if input[i] == 'I' or input[i] == 'L' :
-            if input[i+1] != 'I' and input[i+1] != 'V' and input[i+1] != 'X':
-                print(f'error de sintaxis despues de {input[i]} solo puede ir I, V o X ') 
-        if input[i] == 'V':
-            if input[i+1] != 'I':
-                print(f'error de sintaxis despues de {input[i]} solo puede ir I')
-        if input[i] == 'X':
-            if input[i+1] == 'M':
-                print(f'error de sintaxis despues de {input[i]} solo puede ir I,V,X,L o C ')  
-            
+""" Verifica la sintaxis de acuerdo a las reglas de los numeros romanos
+    hasta que queda un arreglo con el numero completo  y valido romano"""
+def sintax_checker(entrada):
+    result = []
+    entrada.insert(0,0)
+    entrada.append(0)
+    for i in range(len(entrada)-1):
+        if entrada[i] == 'I':
+            result.append(entrada[i])
+            if entrada[i+1] != 'I' and entrada[i+1] != 'V' and entrada[i+1] != 'X':
+                print(f'error de sintaxis despues de {entrada[i]} solo puede ir I, V o X ') 
+                break
+        if entrada[i] == 'V':
+            result.append(entrada[i])
+            if entrada[i+1] != 'I':
+                print(f'error de sintaxis despues de {entrada[i]} solo puede ir I')
+                break
+            if entrada[i-1] == "I" and entrada[i+1]:
+                print("Error, despues de IV no puede ir I ")
+                break
+        if entrada[i] == 'X':
+            result.append(entrada[i])
+            if entrada[i+1] == 'M':
+                print(f'error de sintaxis despues de {entrada[i]} solo puede ir I,V,X,L o C ')
+                break
+            if entrada[i-1] == 'I' and entrada[i+1]:
+                print('error, despues de IX no puede ir otra I')  
+                break
+        if entrada[i] == 'L':
+            result.append(entrada[i])
+            if entrada[i+1] != 'I' and entrada[i+1] != 'V' and entrada[i+1] != 'X':
+                print(f'error de sintaxis despues de {entrada[i]} solo puede ir I, V o X ')
+                break
+            if entrada[i-1] == 'X' and entrada[i+1]=='X':
+                print('Error,  despues de XL, no puede haber otra X')
+                break
+        if entrada[i] == 'D':
+            result.append(entrada[i])
+            if entrada[i+1] == 'M':
+                print(f'error de sintaxis despues de D solo puede ir I, V,  X, L, C ')
+                break
+            if entrada[i-1] == 'C' and entrada[i+1] == 'C':
+                print("Error de sintaxis, despues de CD no puede haber otra C")
+                break
+        if entrada[i] == 'C' or entrada[i] == 'M':
+            result.append(entrada[i])
+    return result
+
 ##m main
-input = 'Xiilena'
-input = input.upper()
 
+def main():
+    print("\n### Detector de numeros romanos en cadena de texto ####\n")    
+    entrada = input("Inserta palabra que quieres verificar: ")
+    entrada = entrada.upper()
 
-is_roman(input)
-is_valid(input)
+    if is_roman(entrada):
 
+        romanos = separate_roman(entrada)
+        print(romanos)
+        checked_romanos= sintax_checker(romanos)
+        print(checked_romanos)
+        checked_duplicates = is_duplicate(checked_romanos)
+        roman_value = numerar_romanos(checked_duplicates)
+        print(roman_value)
+        resultado = evaluar_valores(roman_value)
+        print(entrada + '=' + str(resultado))
 
-romanos = separate_roman(input)
-
-print(romanos)
-sintax_checker(romanos)
-roman_value = numerar_romanos(romanos)
-print(roman_value)
-evaluar_valores(roman_value)
-
+main()
